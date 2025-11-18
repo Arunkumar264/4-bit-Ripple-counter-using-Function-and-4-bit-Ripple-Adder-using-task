@@ -24,7 +24,8 @@ Capture screenshots of the waveform and save the simulation logs. These will be 
 # Verilog Code
 # 4 bit Ripple Adder using Task
 // 4-bit Ripple Carry Adder using Task
-module ripple_adder_task (
+
+module ripple_adder (
     input [3:0] A, B,
     input Cin,
     output reg [3:0] Sum,
@@ -54,11 +55,34 @@ endmodule
 
 # Test Bench
 
+module ripple_adder_tb;
+reg [3:0] A,B;
+reg Cin;
+wire [3:0] Sum;
+wire Cout;
+
+ripple_adder uut(A,B,Cin,Sum,Cout);
+
+initial begin
+A=4'b0000; B=4'b0000; Cin=0;
+#10 A=4'b0101; B=4'b0011; Cin=0;
+#10 A=4'b1111; B=4'b0001; Cin=0;
+#10 A=4'b1010; B=4'b0101; Cin=1;
+#10 A=4'b1100; B=4'b1100; Cin=1;
+#10 $stop;
+end
+endmodule
+
+
 # Output Waveform
+
+<img width="1615" height="823" alt="Screenshot 2025-11-18 091828" src="https://github.com/user-attachments/assets/d6ac885d-19cb-45ee-a509-b9c5961a702e" />
+
 
 # 4 bit Ripple counter using Function
 // 4-bit Ripple Counter using Function
-module ripple_counter_func (
+
+module ripple_func (
     input clk, rst,
     output reg [3:0] Q
 );
@@ -77,9 +101,32 @@ endmodule
 
 # Test Bench
 
+module ripple_func_tb;
+    reg clk_t, rst_t;
+    wire [3:0] q_t;
+
+    ripple_func dut(.clk(clk_t),.rst(rst_t),.Q(q_t));
+
+    initial 
+        begin
+            clk_t = 0;
+            rst_t = 1;
+          #5 
+            rst_t = 0;
+    end
+     always
+          #10  clk_t = ~clk_t;
+endmodule
+
+
 
 # Output Waveform 
 
+<img width="1615" height="826" alt="Screenshot 2025-11-18 091911" src="https://github.com/user-attachments/assets/ccaa632d-a8e4-4f93-bf93-7628a9918fe6" />
+
+# Conclution 
+
+In this experiment, a 4-bit-Ripple-counter-using-Function-and-4-bit-Ripple-Adder-using-task was successfully designed and simulated using Verilog HDL.
 
 # Conclusion
 In this experiment, a 4-bit-Ripple-counter-using-Function-and-4-bit-Ripple-Adder-using-task was successfully designed and simulated using Verilog HDL.
